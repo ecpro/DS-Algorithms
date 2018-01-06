@@ -29,5 +29,10 @@ public class Palindromes {
 		System.out.println(palindromePermutation("aabcc bb"));
 		System.out.println(palindromePermutation("taco cat"));
 		System.out.println(palindromePermutation("aab aaa"));
+		replaceit("hi   how  are you");
+	}
+	
+	public static void replaceit(String x) {
+		System.out.println(x.replaceAll("\\s+", " "));
 	}
 }
