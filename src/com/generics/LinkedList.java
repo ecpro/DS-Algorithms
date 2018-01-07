@@ -6,6 +6,9 @@ import java.util.Set;
 public class LinkedList {
 	
 	private Node head = new Node(Integer.MIN_VALUE, null);
+	private int count = 0;
+	private int total = 0;
+	private int target = 0;
 	
 	public void add(int key) {
 		if(head.getNext() == null) {
@@ -81,6 +84,62 @@ public class LinkedList {
 		}
 	}
 	
+	public void kthToLastNode(Integer k) {
+		kthtoLastNode(this.head, 3);
+	}
+	
+	private void kthtoLastNode(Node node, Integer k) {
+		if(node == null) {
+			this.count++;
+			return;
+		}
+		kthtoLastNode(node.getNext(), k);
+		if(count == k) {
+			System.out.println("Kth node is " + node.getKey() + " where k is " + k);
+		}
+		count++;
+		return;
+	}
+
+	public void removeMiddle() {
+		removeMiddle(this.head.getNext());
+	}
+	
+	private void removeMiddle(Node node) {
+		if(node.getNext() == null) {
+			this.total++;
+			this.target = (int) Math.ceil(this.total / 2);
+			return;
+		}
+		this.total++;
+		removeMiddle(node.getNext());
+		this.count++;
+		if(this.total - this.count == this.target - 1) {
+			node.setNext(node.getNext().getNext());
+		}
+	}
+	
+	public void pivotAroundX(int x) {
+		// find pivot node
+		Node p1 = this.head.getNext();
+		while(p1.getKey() < x) {
+			p1 = p1.getNext();
+		}
+		
+		if(p1.getNext() != null) {
+			Node p2 = p1;
+			while(p1 != null) {
+				if(p1.getKey() < p2.getKey()) {
+					int temp = p1.getKey();
+					p1.setKey(p2.getKey());
+					p2.setKey(temp);
+					p2 = p2.getNext();
+				}
+				p1 = p1.getNext();
+			}
+		}
+	}
+	
 	public void print() {
 		Node temp = head;
 		while(temp.getNext() != null) {
@@ -102,8 +161,20 @@ public class LinkedList {
 		list.add(2);
 		list.add(2);
 		//list.removeDuplicates();
-		list.removeDupWithoutAdditionalDS();
-		list.print();
+		//list.removeDupWithoutAdditionalDS();
+		//list.kthToLastNode(3);
+		//list.print();
+		
+		LinkedList ll = new LinkedList();
+		ll.add(3);
+		ll.add(5);
+		ll.add(8);
+		ll.add(5);
+		ll.add(10);
+		ll.add(2);
+		ll.add(1);
+		ll.pivotAroundX(5);
+		ll.print();
 		
 	}
 	
