@@ -1,4 +1,4 @@
-package com.generics;
+package com.linkedlists;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +10,15 @@ public class LinkedList {
 	private int total = 0;
 	private int target = 0;
 	private boolean isPalindrome = true;
+	
+	
+	public LinkedList(Node node) {
+		this.head = node;
+	}
+	
+	public LinkedList(Integer...keys) {
+		this.add(keys);
+	}
 
 	public void add(int key) {
 		Node node = new Node(key, null);
@@ -24,6 +33,12 @@ public class LinkedList {
 			temp.setNext(new Node(key, null));
 		}
 
+	}
+	
+	public void add(Integer... keys) {
+		for (Integer key : keys) {
+			this.add(key);
+		}
 	}
 
 	public void removeNext(Node node) {
@@ -150,6 +165,8 @@ public class LinkedList {
 	public void isLinkedListAPalindrome() {
 		isLinkedListPalindrome(this.head.getNext(), this.head.getNext());
 	}
+	
+	
 
 	private void isLinkedListPalindrome(Node end, Node start) {
 		if (end == null) {
@@ -193,17 +210,81 @@ public class LinkedList {
 		return this.head;
 	}
 
+	public static LinkedList mergeSortedList(Node l1, Node l2) {
+		Node f = null;
+		Node temp = f;
+		while(l1 != null && l2 != null) {
+			int key = Integer.MIN_VALUE;
+			
+			// find the min value
+			if(l1.getKey() < l2.getKey()) {
+				key = l1.getKey();
+				l1 = l1.getNext();
+			}
+			else {
+				key = l2.getKey();
+				l2 = l2.getNext();
+			}
+			
+			if(f == null) {
+				f= new Node(key, null);
+				temp = f;
+			}
+			else {
+				temp.setNext(new Node(key, null));
+				temp = temp.getNext();
+			}
+		}
+		
+		while(l1 != null) {
+			temp.setNext(new Node(l1.getKey(), null));
+			temp =temp.getNext();
+			l1 = l1.getNext();
+		}
+		while(l2 != null) {
+			temp.setNext(new Node(l2.getKey(), null));
+			temp =temp.getNext();
+			l2 = l2.getNext();
+		}
+		
+		return new LinkedList(f);
+	}
+	
+	public static LinkedList recursiveMerge(Node l1, Node l2) {
+		Node f = null;
+		if(l1 == null) {
+			return new LinkedList(l2);
+		}
+		else if(l2 == null) { 
+			return new LinkedList(l1);
+		}
+		
+		if(l1.getKey() < l2.getKey()) {
+			f = new Node(l1.getKey(), null);
+			f.setNext(recursiveMerge(l1.getNext(), l2).getHead());
+		}
+		else {
+			f = new Node(l2.getKey(), null);
+			f.setNext(recursiveMerge(l1, l2.getNext()).getHead());
+		}
+		return new LinkedList(f);
+	}
+	
+	
 	public static void main(String[] args) {
-		LinkedList list = new LinkedList();
-		list.add(2);
-		list.add(4);
-		list.add(6);
-		list.add(4);
-		list.add(10);
-		list.print();
-		//list.remove(6);
-		list.reverseLL();
-		list.print();
+		
+		LinkedList l1 = new LinkedList();
+		l1.add(1,8,9);
+		l1.print();
+
+		LinkedList l2 = new LinkedList();
+		l2.add(1,2,3,6);
+		l2.print();
+		
+		//LinkedList mergeSortedList = mergeSortedList(l1.getHead(), l2.getHead());
+		LinkedList mergeSortedList = recursiveMerge(l1.getHead(), l2.getHead());
+		mergeSortedList.print();
+		
 	}
 
 }
