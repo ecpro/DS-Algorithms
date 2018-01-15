@@ -9,6 +9,7 @@ public class LinkedList {
 	private int count = 0;
 	private int total = 0;
 	private int target = 0;
+	private boolean isPalindrome = true;
 	
 	public void add(int key) {
 		if(head.getNext() == null) {
@@ -140,6 +141,32 @@ public class LinkedList {
 		}
 	}
 	
+	public void isLinkedListAPalindrome() {
+		isLinkedListPalindrome(this.head.getNext(), this.head.getNext());
+	}
+	
+	private void isLinkedListPalindrome(Node end, Node start) {
+		if(end == null) {
+			return;
+		}
+		isLinkedListPalindrome(end.getNext(), start);
+		if(this.isPalindrome && end.getKey() != start.getKey()) {
+			this.isPalindrome = false;
+		}
+		start = start.getNext();
+	}
+	
+	public Node reverseLL(Node node) {
+		if(node.getNext() == null) {
+			Node temp = new Node(Integer.MIN_VALUE, node);
+			return temp;
+		}
+		Node temp = reverseLL(node.getNext());
+		node.getNext().setNext(node);
+		node.setNext(null);
+		return temp;
+	}
+	
 	public void print() {
 		Node temp = head;
 		while(temp.getNext() != null) {
@@ -147,6 +174,18 @@ public class LinkedList {
 			temp = temp.getNext();
 		}
 		System.out.print("NULL\n");
+	}
+	
+	public void print(Node node) {
+		while(node.getNext() != null) {
+			System.out.print(node.getNext().getKey() + "==>");
+			node = node.getNext();
+		}
+		System.out.print("NULL\n");
+	}
+	
+	public Node getHead() {
+		return this.head;
 	}
 	
 	public static void main(String[] args) {
@@ -160,21 +199,8 @@ public class LinkedList {
 		list.add(10);
 		list.add(2);
 		list.add(2);
-		//list.removeDuplicates();
-		//list.removeDupWithoutAdditionalDS();
-		//list.kthToLastNode(3);
-		//list.print();
+		list.print(list.reverseLL(list.getHead()));
 		
-		LinkedList ll = new LinkedList();
-		ll.add(3);
-		ll.add(5);
-		ll.add(8);
-		ll.add(5);
-		ll.add(10);
-		ll.add(2);
-		ll.add(1);
-		ll.pivotAroundX(5);
-		ll.print();
 		
 	}
 	
