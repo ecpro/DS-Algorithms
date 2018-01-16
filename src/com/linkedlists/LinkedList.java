@@ -70,6 +70,35 @@ public class LinkedList {
 		}
 		
 	}
+	
+	
+	public void sort() {
+		this.head = this.sort(this.head);
+	}
+	
+	private Node sort(Node node) {
+		
+		if(node == null) throw new NullPointerException("Cannot sort empty list");
+		if(node.getNext() == null) return node;
+		
+		// 1. Divide the list into two halves and store their pointer to head
+		Node slow= node ,fast = node;
+		
+		while(fast.getNext() != null && fast.getNext().getNext() != null) {
+			fast = fast.getNext().getNext();
+			slow = slow.getNext();
+			// now slow is at the mid point at the end of the loop
+		}
+		
+		Node mid = slow.getNext();
+		// 2. Cut the list in two halves
+		slow.setNext(null);
+		Node first = sort(node);
+		Node sec = sort(mid);
+		
+		// 3. Merge them using already written mergeSortedList
+		return mergeSortedList(first, sec).getHead();
+	}
 
 	public void removeDupWithoutAdditionalDS() {
 		Node p1 = head.getNext();
@@ -284,6 +313,12 @@ public class LinkedList {
 		//LinkedList mergeSortedList = mergeSortedList(l1.getHead(), l2.getHead());
 		LinkedList mergeSortedList = recursiveMerge(l1.getHead(), l2.getHead());
 		mergeSortedList.print();
+		
+		System.out.println("Sorting Linked list");
+		
+		LinkedList list = new LinkedList(1,3,2,0);
+		list.sort();
+		list.print();
 		
 	}
 
