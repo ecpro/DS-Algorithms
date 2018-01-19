@@ -60,6 +60,7 @@ public class WeatherData implements MyObservable {
 	
 	public static void main(String[] args) throws InterruptedException {
 		MyObservable myObservable = new WeatherData(23.12, 12.35, 32);
+		
 		Observer ob1 = new Device1();
 		Observer ob2 = new Device2();
 		
