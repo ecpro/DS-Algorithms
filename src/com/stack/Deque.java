@@ -110,6 +110,7 @@ public class Deque<Item> implements Iterable<Item>{
 
            @Override
            public Item next() {
+               if(node == null) throw new NoSuchElementException("No more items to return");
                 Item retVal = (Item) node.item;
                 node = node.next;
                 return retVal;
@@ -124,15 +125,18 @@ public class Deque<Item> implements Iterable<Item>{
 	   public static void main(String[] args) {
 	       Deque<Integer> deq = new Deque<>();
 	       deq.addFirst(23);
+	       deq.removeFirst();
+	       //deq.removeLast();
 	       deq.addFirst(24);
 	       deq.addLast(21);
 	       deq.addLast(25);
 
 	       Iterator<Integer>  iterator = deq.iterator();
-           deq.removeFirst();
-	       while (iterator.hasNext()) {
-	           System.out.println(iterator.next());
-           }
+
+	       //deq.removeFirst();
+           iterator.remove();
+	       System.out.println(iterator.next());
+	       System.out.println(iterator.next());
        }
 
 }
