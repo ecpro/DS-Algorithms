@@ -44,6 +44,11 @@ public class Graph {
         return adjList[v].size();
     }
 
+    public Iterable<Integer> adjVertices(int v) {
+        validateVertex(v);
+        return adjList[v];
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -56,5 +61,25 @@ public class Graph {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public static void main(String args []) {
+        Graph graph = new Graph(10);
+        graph.addEdge(0,1);
+        graph.addEdge(0,5);
+        graph.addEdge(1,2);
+        graph.addEdge(1,3);
+        graph.addEdge(3,4);
+        graph.addEdge(5,6);
+        graph.addEdge(7,8);
+        graph.addEdge(7,9);
+        System.out.println(graph.toString());
+
+        DepthFirstSearch dfs = new DepthFirstSearch(graph, 0);
+
+        System.out.println(0 + " has path to 6 : " + dfs.hasPathTo(6));
+        for(int x : dfs.pathTo(6)) {
+            System.out.print(x + " ");
+        }
     }
 }
