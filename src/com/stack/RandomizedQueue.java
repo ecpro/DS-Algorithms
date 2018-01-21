@@ -33,14 +33,14 @@ public class RandomizedQueue<Item> implements Iterable {
     public Item dequeue() {
         if(isEmpty()) throw new NoSuchElementException("Cannot dequeue from empty queue");
         Item retVal  = null;
-        if(size == 1) {
-            retVal = (Item) head.next;
-            head = null;
+        int position = StdRandom.uniform(size);
+        if(position == 0) {
+            retVal = (Item) head.item;
+            head = head.next;
         }
         else {
-            int position = StdRandom.uniform(size);
             Node temp = head;
-            for(int i = 0; i < position; i++) {
+            for(int i = 0; i < position - 1; i++) {
                 temp = temp.next;
             }
             retVal = (Item) temp.next.item;
@@ -116,6 +116,10 @@ public class RandomizedQueue<Item> implements Iterable {
         queue.enqueue(14);
         queue.enqueue(15);
 
+        queue.dequeue();
+        queue.dequeue();
+        queue.dequeue();
+
         System.out.println(queue.size());
 
         System.out.println(queue.sample());
@@ -125,7 +129,7 @@ public class RandomizedQueue<Item> implements Iterable {
         Iterator<Integer> itr2 = queue.iterator();
 
         while(itr1.hasNext()) {
-            System.out.println("itr1 " + itr1.next() + " itr2 " + itr2.next());
+           // System.out.println("itr1 " + itr1.next() + " itr2 " + itr2.next());
         }
     }
 }
