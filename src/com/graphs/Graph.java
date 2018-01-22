@@ -11,7 +11,8 @@ public class Graph {
     private final int numVertices;
     private int numEdges;
 
-    public Graph(int numVertices) {
+    @SuppressWarnings("unchecked")
+	public Graph(int numVertices) {
         if(numVertices < 0) throw new IllegalArgumentException("Number of vertices " + numVertices + " cannot be negative");
         this.numVertices = numVertices;
         this.numEdges = 0;
@@ -75,10 +76,13 @@ public class Graph {
         graph.addEdge(7,9);
         System.out.println(graph.toString());
 
-        DepthFirstSearch dfs = new DepthFirstSearch(graph, 0);
+        //DepthFirstSearch dfs = new DepthFirstSearch(graph, 0);
+        BreathFirstSearch bfs = new BreathFirstSearch(graph, 1);
+        
+        System.out.println(bfs);
 
-        System.out.println(0 + " has path to 6 : " + dfs.hasPathTo(6));
-        for(int x : dfs.pathTo(6)) {
+        System.out.println(0 + " has path to 4 : " + bfs.hasPathTo(4));
+        for(int x : bfs.pathTo(4)) {
             System.out.print(x + " ");
         }
     }
