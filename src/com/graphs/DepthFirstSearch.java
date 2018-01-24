@@ -10,15 +10,22 @@ public class DepthFirstSearch {
     private final int start;
     private final int [] edgeTo;
     private final StringBuilder routeTrace;
+    
+    public static enum DFSType {
+    	NON_RECURSIVE,
+    	RECURSIVE
+    }
 
-    public DepthFirstSearch(Graph g, int startVertex) {
+    public DepthFirstSearch(Graph g, int startVertex, DFSType type) {
         this.start = startVertex;
         routeTrace = new StringBuilder("Parent to child node \n" );
         visiited = new boolean[g.getNumVertices()];
         // initial none of the edges are visited, hence all set to false
         for(int i = 0; i < visiited.length; i++) visiited[i] = false;
         edgeTo = new int[g.getNumVertices()];
-        dfs(g, start);
+        
+        if(type.equals(DFSType.NON_RECURSIVE)) this.dfsNonRecursive(g, start); 
+        else if(type.equals(DFSType.RECURSIVE)) this.dfs(g, start);
     }
 
     private void dfs(Graph g, int startVertex) {
@@ -30,6 +37,21 @@ public class DepthFirstSearch {
                 dfs(g, v);
             }
         }
+    }
+    
+    private void dfsNonRecursive(Graph g, int startVertex) {
+    	Stack<Integer> stack = new Stack<Integer>();
+    	stack.push(startVertex);
+    	while(!stack.isEmpty()) {
+    		int parent = stack.pop();
+    		visiited[parent] = true;
+    		for(int v : g.adjVertices(parent)) {
+    			if(!visiited[v]) {
+    				this.edgeTo[v] = parent;
+    				stack.push(v);
+    			}
+    		}
+    	}
     }
 
     public boolean hasPathTo(int vertex) {
