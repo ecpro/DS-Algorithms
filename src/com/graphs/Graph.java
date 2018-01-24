@@ -76,13 +76,21 @@ public class Graph {
         graph.addEdge(7,9);
         System.out.println(graph.toString());
 
-        //DepthFirstSearch dfs = new DepthFirstSearch(graph, 0);
-        BreathFirstSearch bfs = new BreathFirstSearch(graph, 1);
+        /*BreathFirstSearch bfs = new BreathFirstSearch(graph, 1);
         
         System.out.println(bfs);
 
         System.out.println(0 + " has path to 4 : " + bfs.hasPathTo(4));
         for(int x : bfs.pathTo(4)) {
+            System.out.print(x + " ");
+        }*/
+        
+        DepthFirstSearch dfs = new DepthFirstSearch(graph, 0, DepthFirstSearch.DFSType.NON_RECURSIVE);
+        
+        System.out.println(dfs);
+
+        System.out.println(0 + " has path to 4 : " + dfs.hasPathTo(4));
+        for(int x : dfs.pathTo(4)) {
             System.out.print(x + " ");
         }
     }
