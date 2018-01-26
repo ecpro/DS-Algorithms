@@ -1,7 +1,5 @@
 package com.graphs;
 
-import java.util.Arrays;
-
 /**
  * Created by eccspro on 22/01/18.
  */
@@ -11,6 +9,7 @@ public class ConnectedComponent {
     private int count = 0;
 
     public ConnectedComponent(Graph g) {
+        if(!(g instanceof UndirectedGraph)) throw new UnsupportedOperationException("this method only works on " + UndirectedGraph.class);
         visited = new boolean[g.getNumVertices()];
         id = new int[g.getNumVertices()];
         for(int v = 0; v < visited.length; v++) {

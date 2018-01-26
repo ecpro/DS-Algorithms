@@ -8,7 +8,7 @@ public class WeatherData implements MyObservable {
 	private Set<Observer> observers;
 	private WeatherDataVO weatherDataVO;
 	
-	
+
 	public WeatherData(double temperature, double humidity, double pressure) {
 		this.weatherDataVO = new WeatherDataVO();
 		observers = new HashSet<Observer>();

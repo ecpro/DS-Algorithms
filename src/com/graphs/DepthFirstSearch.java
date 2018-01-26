@@ -16,7 +16,7 @@ public class DepthFirstSearch {
     	RECURSIVE
     }
 
-    public DepthFirstSearch(Graph g, int startVertex, DFSType type) {
+    public DepthFirstSearch(UndirectedGraph g, int startVertex, DFSType type) {
         this.start = startVertex;
         routeTrace = new StringBuilder("Parent to child node \n" );
         visiited = new boolean[g.getNumVertices()];
@@ -28,7 +28,7 @@ public class DepthFirstSearch {
         else if(type.equals(DFSType.RECURSIVE)) this.dfs(g, start);
     }
 
-    private void dfs(Graph g, int startVertex) {
+    private void dfs(UndirectedGraph g, int startVertex) {
         visiited[startVertex] = true;
         for(int v : g.adjVertices(startVertex)) {
             if(!visiited[v]) {
@@ -39,7 +39,7 @@ public class DepthFirstSearch {
         }
     }
     
-    private void dfsNonRecursive(Graph g, int startVertex) {
+    private void dfsNonRecursive(UndirectedGraph g, int startVertex) {
     	Stack<Integer> stack = new Stack<Integer>();
     	stack.push(startVertex);
     	while(!stack.isEmpty()) {

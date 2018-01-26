@@ -9,7 +9,7 @@ public class BreathFirstSearch {
 	private final int start;
 	private final StringBuilder traceRoute;
 	
-	public BreathFirstSearch(Graph g, int startIndex) {
+	public BreathFirstSearch(UndirectedGraph g, int startIndex) {
 		this.start = startIndex;
 		this.traceRoute = new StringBuilder("Parent node to child node\n");
 		this.visited = new boolean[g.getNumVertices()];
@@ -20,7 +20,7 @@ public class BreathFirstSearch {
 		this.bfs(g, start);
 	}
 	
-	private void bfs(Graph g, int startIndex) {
+	private void bfs(UndirectedGraph g, int startIndex) {
 		Queue<Integer> queue = new Queue<Integer>();
 		queue.enqueue(startIndex);
 		while(!queue.isEmpty()) {

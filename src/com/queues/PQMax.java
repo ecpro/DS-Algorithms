@@ -1,5 +1,7 @@
 package com.queues;
 
+import edu.princeton.cs.algs4.Graph;
+
 public class PQMax<T extends Comparable<T>> {
 	private final T[] key;
 	private int N;
@@ -38,6 +40,6 @@ public class PQMax<T extends Comparable<T>> {
 
 	public static void main(String[] args) {
 		PQMax<Integer> pq = new PQMax<>(16);
-
 	}
+
 }
