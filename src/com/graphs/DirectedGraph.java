@@ -46,11 +46,28 @@ public class DirectedGraph extends Graph {
 		dig.addEdge(3,2);
 		dig.addEdge(3,4);
 		dig.addEdge(3,5);
+		dig.addEdge(3,6);
 		dig.addEdge(5,2);
 		dig.addEdge(6,4);
+		dig.addEdge(6,0);
+
+		BreathFirstSearch bfs = new BreathFirstSearch(dig, 3);
 
 		System.out.println(dig);
-		ConnectedComponent connectedComponent = new ConnectedComponent(dig);
+		System.out.println(bfs);
+
+		System.out.println(3 + " has path to 0 : " + bfs.hasPathTo(0));
+		if(bfs.hasPathTo(0)) {
+			for(int x : bfs.pathTo(0)) {
+				System.out.print(x + " ");
+			}
+		}
+		else {
+			System.out.println("No path available");
+		}
+
+		//System.out.println(dig);
+		//ConnectedComponent connectedComponent = new ConnectedComponent(dig);
 
 	}
 }
