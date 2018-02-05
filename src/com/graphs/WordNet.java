@@ -25,27 +25,26 @@ public final class WordNet {
 
         // load synsets and hypernyms from files
         loadSynsets(synsets);
-        this.numVertices = nounsSynsetMap.size();
+        this.numVertices = this.idSynsetMap.size();
         this.digraph = new Digraph(numVertices);
         loadHypernyms(hypernyms);
 
-        boolean flag = isDAG(digraph);
-
-        if(flag) throw new IllegalArgumentException("graph is not DAG");
-
-        //validateTwoRoots(digraph);
+        validateTwoRoots(digraph);
         validateCycle(digraph);
     }
 
     private void validateCycle(Digraph digraph) {
         DirectedCycle dc = new DirectedCycle(this.digraph);
-        if(dc.hasCycle()) throw new IllegalArgumentException("given directly graph has a cycle");
+        if(dc.hasCycle()) throw new IllegalArgumentException("given directed graph has a cycle");
     }
 
     private void validateTwoRoots(Digraph digraph) {
         int numVerticesWithMoreThan1OutDegree = 0;
         for(int i = 0; i < numVertices; i++) {
-            if(digraph.outdegree(i) == 0) numVerticesWithMoreThan1OutDegree++;
+            if(digraph.outdegree(i) == 0) {
+            	//System.out.println("vertex " + i + "outdegree " + digraph.outdegree(i));
+            	numVerticesWithMoreThan1OutDegree++;
+            }
         }
         if(numVerticesWithMoreThan1OutDegree > 1) throw new IllegalArgumentException("Graph must not have two roots");
     }
@@ -82,7 +81,6 @@ public final class WordNet {
     private void loadHypernyms(String hypernyms) {
         List<String[]> rows = this.readCSV(hypernyms);
         for(String [] row: rows) {
-            int vertex = Integer.parseInt(row[0]);
             for(int i = 1; i < row.length; i++) {
                     digraph.addEdge(Integer.parseInt(row[0]), Integer.parseInt(row[i]));
             }
@@ -130,50 +128,10 @@ public final class WordNet {
                 '}';
     }
 
-    private boolean dfs(int v, Digraph G, Map<Integer, Boolean> visit,
-                        Stack<Integer> S) {
-        visit.put(v, true);
-        S.push(v);
-        for (int w : G.adj(v)) {
-            if (S.contains(w))
-                return false;
-            if (!visit.containsKey(w))
-                if (!dfs(w, G, visit, S))
-                    return false;
-        }
-        S.pop();
-        return true;
-    }
-
-    private boolean isDAG(Digraph G) {
-        Map<Integer, Boolean> visit = new HashMap<Integer, Boolean>();
-        Stack<Integer> S = new Stack<Integer>();
-        for (int i = 0; i < G.V(); i++) {
-            if (!visit.containsKey(i))
-                if (!dfs(i, G, visit, S))
-                    return false;
-        }
-        // check multiple roots
-        int cnt = 0;
-        for (int i = 0; i < G.V(); i++) {
-            int n = 0;
-            Iterator<Integer> it = G.adj(i).iterator();
-            while (it.hasNext()) {
-                n += 1;
-                it.next();
-            }
-            if (n == 0)
-                cnt += 1;
-        }
-        if (cnt != 1)
-            return false;
-        return true;
-    }
-
     // do unit testing of this class
     public static void main(String[] args) {
-        WordNet net = new WordNet("/Users/eccspro/Documents/version-control/DS-Algorithms/Resources/wordnet/synsets6.txt",
-                "/Users/eccspro/Documents/version-control/DS-Algorithms/Resources/wordnet/hypernyms6InvalidTwoRoots.txt");
+        WordNet net = new WordNet("C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\synsets11.txt",
+                "C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\hypernyms11ManyPathsOneAncestor.txt");
         System.out.println(net);
     }
 }
