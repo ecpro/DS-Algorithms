@@ -2,7 +2,9 @@ package com.graphs;
 
 import edu.princeton.cs.algs4.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,7 +85,7 @@ public class SAP {
             for(int to : w) {
                 this.validateVertex(to);
                 int currLen = this.length(from, to);
-                if(currLen < shortestLength) shortestLength = currLen;
+                if(currLen != -1 && currLen < shortestLength) shortestLength = currLen;
             }
         }
         return shortestLength == Integer.MAX_VALUE ? -1 : shortestLength;
@@ -98,7 +100,7 @@ public class SAP {
             for(int to : w) {
                 this.validateVertex(to);
                 int currLength = this.length(from, to);
-                if(currLength < shortestLength) {
+                if(currLength != -1 && currLength < shortestLength) {
                     shortestLength = currLength;
                     nearestCommonAncestor = this.ancestor(from ,to);
                 }
@@ -112,6 +114,10 @@ public class SAP {
         In in = new In("/Users/eccspro/Documents/version-control/DS-Algorithms/Resources/wordnet/digraph1.txt");
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
+
+        List<Integer> Vs  = Arrays.asList(12,7,4,0);
+        List<Integer> Ws  = Arrays.asList(2,9,8,3);
+        System.out.println("shortest common ancestor " + sap.ancestor(Vs, Ws) + " with length " + sap.length(Vs, Ws));
         while (!StdIn.isEmpty()) {
             int v = StdIn.readInt();
             int w = StdIn.readInt();

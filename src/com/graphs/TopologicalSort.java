@@ -53,6 +53,5 @@ public class TopologicalSort {
 
 	 TopologicalSort ts = new TopologicalSort(dig);
 	 System.out.println(ts);
-
     }
 }
