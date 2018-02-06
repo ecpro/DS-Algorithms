@@ -1,16 +1,15 @@
 package com.graphs;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Queue;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by eccspro on 04/02/18.
  */
-public class SAP {
+public final class SAP {
 
     private final Digraph digraph;
     private final Map<Integer, Map<Integer, Integer>> ancestors;
@@ -18,11 +17,11 @@ public class SAP {
     // constructor takes a digraph (not necessarily a DAG)
     public SAP(Digraph G) {
         digraph = G;
-        ancestors = new HashMap<Integer, Map<Integer,Integer>>();
-        findAllAncesstors();
+        ancestors = new HashMap<>();
+        findAllAncestors();
     }
     
-    private void findAllAncesstors() {
+    private void findAllAncestors() {
     	for(int v = 0; v < digraph.V(); v++) {
     		ancestors.put(v, this.allAncestorDistances(v));
     	}
@@ -125,28 +124,4 @@ public class SAP {
         }
         return nearestCommonAncestor == Integer.MAX_VALUE ? -1 : nearestCommonAncestor;
     }
-    
-    public void printAncesstors() {
-    	System.out.println(this.ancestors);
-    }
-
-    // do unit testing of this class
-    public static void main(String[] args) {
-        //In in = new In("/Users/eccspro/Documents/version-control/DS-Algorithms/Resources/wordnet/digraph1.txt");
-    	In in = new In("C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\digraph2.txt");
-        Digraph G = new Digraph(in);
-        SAP sap = new SAP(G);
-        sap.printAncesstors();
-
-/*        List<Integer> Vs  = Arrays.asList(12,7,4,0);
-        List<Integer> Ws  = Arrays.asList(2,9,8,3);
-        System.out.println("shortest common ancestor " + sap.ancestor(Vs, Ws) + " with length " + sap.length(Vs, Ws));
-        while (!StdIn.isEmpty()) {
-            int v = StdIn.readInt();
-            int w = StdIn.readInt();
-            int length   = sap.length(v, w);
-            int ancestor = sap.ancestor(v, w);
-            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
-        }
-*/    }
 }
