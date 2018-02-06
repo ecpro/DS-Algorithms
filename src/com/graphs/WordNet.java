@@ -4,6 +4,9 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedCycle;
 import edu.princeton.cs.algs4.In;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -29,19 +32,19 @@ public final class WordNet {
         this.digraph = new Digraph(numVertices);
         loadHypernyms(hypernyms);
 
-        validateTwoRoots(digraph);
-        validateCycle(digraph);
+        validateTwoRoots();
+        validateCycle();
     }
 
-    private void validateCycle(Digraph digraph) {
+    private void validateCycle() {
         DirectedCycle dc = new DirectedCycle(this.digraph);
         if(dc.hasCycle()) throw new IllegalArgumentException("given directed graph has a cycle");
     }
 
-    private void validateTwoRoots(Digraph digraph) {
+    private void validateTwoRoots() {
         int numVerticesWithMoreThan1OutDegree = 0;
         for(int i = 0; i < numVertices; i++) {
-            if(digraph.outdegree(i) == 0) {
+            if(this.digraph.outdegree(i) == 0) {
             	//System.out.println("vertex " + i + "outdegree " + digraph.outdegree(i));
             	numVerticesWithMoreThan1OutDegree++;
             }
@@ -129,9 +132,19 @@ public final class WordNet {
     }
 
     // do unit testing of this class
-    public static void main(String[] args) {
-        WordNet net = new WordNet("C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\synsets11.txt",
-                "C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\hypernyms11ManyPathsOneAncestor.txt");
-        System.out.println(net);
+    public static void main(String[] args) throws ParseException {
+    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+		String monthStartDate = "06/01/2017";
+		Date startDate = df.parse(monthStartDate);
+		for(int i = 0; i < 10; i++) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(startDate);
+			cal.add(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
+			String monthEndDate = df.format(cal.getTime());
+			System.out.println("start date " + startDate + " end date" + cal.getTime());
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			startDate = cal.getTime();
+		}
+		
     }
 }
