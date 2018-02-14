@@ -4,10 +4,13 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedCycle;
 import edu.princeton.cs.algs4.In;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ArrayList;
+
 
 /**
  * Created by eccspro on 02/02/18.
@@ -132,19 +135,10 @@ public final class WordNet {
     }
 
     // do unit testing of this class
-    public static void main(String[] args) throws ParseException {
-    	DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-		String monthStartDate = "06/01/2017";
-		Date startDate = df.parse(monthStartDate);
-		for(int i = 0; i < 10; i++) {
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(startDate);
-			cal.add(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH) - 1);
-			String monthEndDate = df.format(cal.getTime());
-			System.out.println("start date " + startDate + " end date" + cal.getTime());
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			startDate = cal.getTime();
-		}
-		
+    public static void main(String[] args) {
+        WordNet net = new WordNet("C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\synsets11.txt",
+                "C:\\Users\\RaviPiyu\\Desktop\\DS-Algorithms\\Resources\\wordnet\\hypernyms11ManyPathsOneAncestor.txt");
+        System.out.println(net);
     }
+
 }
