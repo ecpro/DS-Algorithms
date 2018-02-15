@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import edu.princeton.cs.algs4.StdDraw;
+
 public final class Point implements Comparable<Point>{
 	
 	public final int x, y;
@@ -13,6 +15,11 @@ public final class Point implements Comparable<Point>{
 		this.y = y;
 	}
 	
+	/**
+	 * Finds slope of line between this and the other point
+	 * @param that the other point
+	 * @return
+	 */
 	public double slopeTo(Point that) {
 		if(this.x == that.x) {
 			if(this.y == that.y) return 0;
@@ -20,6 +27,23 @@ public final class Point implements Comparable<Point>{
 		}
 		return this.y - that.y / (double)(this.x - that.x);
 	}
+	
+	/**
+     * Draws this point to standard draw.
+     */
+    public void draw() {
+        StdDraw.point(x, y);
+    }
+    
+    /**
+     * Draws the line segment between this point and the specified point
+     * to standard draw.
+     *
+     * @param that the other point
+     */
+    public void drawTo(Point that) {
+        StdDraw.line(this.x, this.y, that.x, that.y);
+    }
 	
 	@Override
 	public int compareTo(Point that) {
@@ -41,10 +65,7 @@ public final class Point implements Comparable<Point>{
 
     @Override
     public String toString() {
-        return "Point{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "(" + x + ", " + y + ")";
     }
 
     public static void main(String [] args) {
