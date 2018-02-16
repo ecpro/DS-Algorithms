@@ -1,8 +1,8 @@
 package com.sorting;
 
-public class LineSegment {
+public final class LineSegment {
 	
-	private final Point p, q;
+	public final Point p, q;
 	
 	public LineSegment(Point p1, Point p2) {
 		this.p = p1;
