@@ -52,7 +52,7 @@ public final class Point implements Comparable<Point>{
 		if(this.y < that.y) return -1;
 		if(this.y > that.y) return 1;
 		if(this.x < that.x) return -1;
-		if(this.x > that.y) return 1;
+		if(this.x > that.x) return 1;
 		return 0;	
 	}
 	
@@ -86,7 +86,9 @@ public final class Point implements Comparable<Point>{
         points.add(p4);
         points.add(p5);
         points.add(p6);
-
+        Point x = new Point(409, 474);
+        Point y = new Point(344, 474);
+        System.out.println(x.compareTo(y));
         Collections.sort(points, p1.slopeOrder());
 
         System.out.println(points);
