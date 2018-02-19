@@ -32,7 +32,7 @@ public class FastCollinearPoints {
             collinearPoints.add(temp);
             for(int j = 0; j < slopeOrdered.length; j++) {
                 Point curr = slopeOrdered[j];
-                if(curr.equals(temp)) continue;
+                //if(curr.equals(temp)) continue;
                 double slope = temp.slopeTo(curr);
                 if(slope == prevSlope) {
                     collinearPoints.add(curr);
