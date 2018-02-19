@@ -9,7 +9,7 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public final class Point implements Comparable<Point>{
 	
-	public final int x, y;
+	private final int x, y;
 	public Point(int x , int y) {
 		this.x = x;
 		this.y = y;
@@ -22,10 +22,12 @@ public final class Point implements Comparable<Point>{
 	 */
 	public double slopeTo(Point that) {
 		if(this.x == that.x) {
-			if(this.y == that.y) return 0;
-			return Double.MAX_VALUE;
+			if(this.y == that.y) return Double.NEGATIVE_INFINITY;
+			return Double.POSITIVE_INFINITY;
 		}
-		return this.y - that.y / (double)(this.x - that.x);
+		Double slope = (this.y - that.y) / (double)(this.x - that.x);
+		if(slope == -0.0) slope = 0.0;
+		return slope;
 	}
 	
 	/**
@@ -59,13 +61,33 @@ public final class Point implements Comparable<Point>{
 		return (p1, p2) -> {
             double slopeToP1 = p.slopeTo(p1);
             double slopeToP2 = p.slopeTo(p2);
-            return (int)(slopeToP1 - slopeToP2);
+            if(slopeToP1 > slopeToP2) return 1;
+            if(slopeToP1 < slopeToP2) return -1;
+            return 0;
         };
 	}
 
     @Override
     public String toString() {
         return "(" + x + ", " + y + ")";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Point point = (Point) o;
+
+        if (x != point.x) return false;
+        return y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = x;
+        result = 31 * result + y;
+        return result;
     }
 
     public static void main(String [] args) {
@@ -87,4 +109,5 @@ public final class Point implements Comparable<Point>{
 
         System.out.println(points);
     }
+
 }

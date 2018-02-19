@@ -5,58 +5,77 @@ import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 
 /**
  * Created by eccspro on 15/02/18.
  */
 public class FastCollinearPoints {
-
-    private final Point[] points;
+    
     private final List<LineSegment> segments;
 
     public FastCollinearPoints(Point[] points) {
         validateAruguments(points, "Point Array");
-        this.points = new Point[points.length];
-        for (int i = 0; i < points.length; i++) {
-            validateAruguments(points[i], "Point Object in points Array");
-            Point p = new Point(points[i].x, points[i].y);
-            this.points[i] = p;
-        }
-        Arrays.sort(points);
         this.segments = new ArrayList<>();
-
-        for(int i = 0; i < this.points.length; i++) {
-            Point temp = this.points[i];
-            Arrays.sort(this.points, temp.slopeOrder());
+        Point [] slopeOrdered = points.clone();
+        Map<Double, Set<Point>> visitedPoints = new HashMap<>();
+        for(int i = 0; i < points.length; i++) {
+            Point temp = points[i];
+            Arrays.sort(slopeOrdered, temp.slopeOrder());
+            double slopes [] = new double[slopeOrdered.length];
+            for(int k = 0; k < slopes.length; k++) {
+                slopes[k] = temp.slopeTo(slopeOrdered[k]);
+            }
             double prevSlope = Double.MIN_VALUE;
-            int slopeCounter = 0;
-            Point start = null, end = null;
-            for(int j = 0; j < points.length; j++) {
-                if(points[j].compareTo(temp) == 0) continue;
-                double slope = temp.slopeTo(points[i]);
+            List<Point> collinearPoints = new ArrayList<>();
+            collinearPoints.add(temp);
+            for(int j = 0; j < slopeOrdered.length; j++) {
+                Point curr = slopeOrdered[j];
+                if(curr.equals(temp)) continue;
+                double slope = temp.slopeTo(curr);
                 if(slope == prevSlope) {
-                    slopeCounter++;
+                    collinearPoints.add(curr);
+                    if(j == slopeOrdered.length - 1 && checkForCollinearity(visitedPoints, collinearPoints, slope)) {
+                        LineSegment seg = new LineSegment(collinearPoints.get(0), collinearPoints.get(collinearPoints.size() - 1));
+                        if(!visitedPoints.containsKey(slope)) {
+                            Set<Point> visited = new HashSet<>();
+                            visited.add(collinearPoints.get(collinearPoints.size() - 1));
+                            visitedPoints.put(slope, visited);
+                        }
+                        else {
+                           Set<Point> visited =  visitedPoints.get(slope);
+                           visited.add(collinearPoints.get(collinearPoints.size() - 1));
+                        }
+                        this.segments.add(seg);
+                    }
                 }
                 else {
-                    if(slopeCounter >= 3) {
-                        end = points[j - 1];
-                        LineSegment segment = new LineSegment(start, end);
-                        this.segments.add(segment);
+                    if(checkForCollinearity(visitedPoints, collinearPoints, prevSlope)) {
+                        LineSegment seg = new LineSegment(collinearPoints.get(0), collinearPoints.get(collinearPoints.size() - 1));
+                        if(!visitedPoints.containsKey(prevSlope)) {
+                            Set<Point> visited = new HashSet<>();
+                            visited.add(collinearPoints.get(collinearPoints.size() - 1));
+                            visitedPoints.put(prevSlope, visited);
+                        }
+                        else {
+                            Set<Point> visited =  visitedPoints.get(prevSlope);
+                            visited.add(collinearPoints.get(collinearPoints.size() - 1));
+                        }
+                        this.segments.add(seg);
                     }
-                    start = points[j];
                     prevSlope = slope;
-                    slopeCounter = 1;
-                }
-                if(j == points.length - 1 && temp.compareTo(points[j]) == prevSlope && slopeCounter >=3) {
-                    end = points[j];
-                    LineSegment segment = new LineSegment(start, end);
-                    this.segments.add(segment);
+                    collinearPoints = new ArrayList<>();
+                    collinearPoints.add(curr);
+                    collinearPoints.add(temp);
                 }
             }
         }
+    }
+
+    private boolean checkForCollinearity(Map<Double, Set<Point>> visitedPoints, List<Point> collinearPoints, double slope) {
+        Collections.sort(collinearPoints);
+        return collinearPoints.size() >= 4 && (!visitedPoints.containsKey(slope) || (visitedPoints.containsKey(slope) && !visitedPoints.get(slope).contains(collinearPoints.get(collinearPoints.size() - 1))));
     }
 
     public int numberOfSegments() {
@@ -71,16 +90,7 @@ public class FastCollinearPoints {
     public LineSegment[] segments() {
         LineSegment [] segments = new LineSegment[this.segments.size()];
         for(int i = 0; i < this.segments.size(); i++) {
-            int px = this.segments.get(i).p.x;
-            int py = this.segments.get(i).p.y;
-            Point pp = new Point(px, py);
-
-            int qx = this.segments.get(i).q.x;
-            int qy = this.segments.get(i).q.y;
-            Point qq = new Point(qx, qy);
-
-            LineSegment segment = new LineSegment(pp, qq);
-            segments[i] = segment;
+            segments[i] = this.segments.get(i);
         }
         return segments;
     }
@@ -88,7 +98,7 @@ public class FastCollinearPoints {
     public static void main(String[] args) {
 
         // read the n points from a file
-        In in = new In("Resources" + File.separator + "collinear" + File.separator + "grid4x4.txt");
+        In in = new In("Resources" + File.separator + "collinear" + File.separator + "input200.txt");
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {

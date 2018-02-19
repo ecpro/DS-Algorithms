@@ -11,24 +11,16 @@ import java.util.List;
 
 public class BruteCollinearPoints {
 
-    private final Point[] points;
     private final List<LineSegment> segments;
 
     public BruteCollinearPoints(Point[] points) {
         validateAruguments(points, "Point Array");
-        this.points = new Point[points.length];
-        for (int i = 0; i < points.length; i++) {
-            validateAruguments(points[i], "Point Object in points Array");
-            Point p = new Point(points[i].x, points[i].y);
-            this.points[i] = p;
-        }
-
         this.segments = new ArrayList<LineSegment>();
 
-        for (int i = 0; i < this.points.length; i++) {
-            for (int j = i+1; j < this.points.length; j++) {
-                for (int k = j+1; k < this.points.length; k++) {
-                    for (int l = k+1; l < this.points.length; l++) {
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i+1; j < points.length; j++) {
+                for (int k = j+1; k < points.length; k++) {
+                    for (int l = k+1; l < points.length; l++) {
                         Point p = points[i], q = points[j], r = points[k], s = points[l];
                         if (p.slopeTo(q) == p.slopeTo(r) && p.slopeTo(q) == p.slopeTo(s)) {
                             Point [] temp  = {p, q, r, s};
@@ -54,16 +46,7 @@ public class BruteCollinearPoints {
     public LineSegment[] segments() {
         LineSegment [] segments = new LineSegment[this.segments.size()];
         for(int i = 0; i < this.segments.size(); i++) {
-            int px = this.segments.get(i).p.x;
-            int py = this.segments.get(i).p.y;
-            Point pp = new Point(px, py);
-
-            int qx = this.segments.get(i).q.x;
-            int qy = this.segments.get(i).q.y;
-            Point qq = new Point(qx, qy);
-
-            LineSegment segment = new LineSegment(pp, qq);
-            segments[i] = segment;
+            segments[i] = this.segments.get(i);
         }
         return segments;
     }
@@ -71,7 +54,7 @@ public class BruteCollinearPoints {
     public static void main(String[] args) {
 
         // read the n points from a file
-        In in = new In("Resources" + File.separator + "collinear" + File.separator + "input6.txt");
+        In in = new In("Resources" + File.separator + "collinear" + File.separator + "input200.txt");
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {
@@ -97,18 +80,6 @@ public class BruteCollinearPoints {
         }
         StdDraw.show();
 
-
-        int x = 6;
-
-        for(int i = 0; i < x;  i++) {
-            for (int j = i+1; j < x; j++) {
-                for (int k = j+1; k < x; k++) {
-                    for (int l = k+1; l < x; l++) {
-                        System.out.println(String.format("%d %d %d %d", i, j, k, l));
-                    }
-                }
-            }
-        }
     }
 
 }

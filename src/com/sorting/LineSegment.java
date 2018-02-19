@@ -2,7 +2,7 @@ package com.sorting;
 
 public final class LineSegment {
 	
-	public final Point p, q;
+	private final Point p, q;
 	
 	public LineSegment(Point p1, Point p2) {
 		this.p = p1;
@@ -14,7 +14,6 @@ public final class LineSegment {
 	}
 	
 	@Override
-	
 	public String toString() {
 		return p + " -> " + q;
 	}
