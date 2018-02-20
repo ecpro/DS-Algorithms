@@ -32,7 +32,6 @@ public class FastCollinearPoints {
 			}
 			double prevSlope = Double.NEGATIVE_INFINITY;
 			List<Point> collinearPoints = new ArrayList<>();
-			collinearPoints.add(temp);
 			for (int j = 0; j < slopeOrdered.length; j++) {
 				Point curr = slopeOrdered[j];
 				// if(curr.equals(temp)) continue;
@@ -40,22 +39,20 @@ public class FastCollinearPoints {
 				if (slope == prevSlope) {
 					collinearPoints.add(curr);
 					if (j == slopeOrdered.length - 1 && checkForCollinearity2(collinearPoints, slope)) {
-						LineSegment seg = new LineSegment(collinearPoints.get(0),
-								collinearPoints.get(collinearPoints.size() - 1));
-                        if(!isSegmentDuplicate(collinearPoints.get(collinearPoints.size() - 1), temp, slope, visited)) {
-                            this.segments.add(seg);
-                            visited.add(collinearPoints.get(collinearPoints.size() - 1));
-                        }
+						if (!isSegmentDuplicate(collinearPoints, temp, slope, visited)) {
+							LineSegment seg = new LineSegment(collinearPoints.get(0), collinearPoints.get(collinearPoints.size() - 1));
+							this.segments.add(seg);
+							visited.add(collinearPoints.get(collinearPoints.size() - 1));
+						}
 					}
 
 				} else {
 					if (checkForCollinearity2(collinearPoints, prevSlope)) {
-						LineSegment seg = new LineSegment(collinearPoints.get(0),
-								collinearPoints.get(collinearPoints.size() - 1));
-						if(!isSegmentDuplicate(collinearPoints.get(collinearPoints.size() - 1), temp, prevSlope, visited)) {
-                            this.segments.add(seg);
-                            visited.add(collinearPoints.get(collinearPoints.size() - 1));
-                        }
+						if (!isSegmentDuplicate(collinearPoints, temp, prevSlope, visited)) {
+							LineSegment seg = new LineSegment(collinearPoints.get(0), collinearPoints.get(collinearPoints.size() - 1));
+							this.segments.add(seg);
+							visited.add(collinearPoints.get(collinearPoints.size() - 1));
+						}
 					}
 					prevSlope = slope;
 					collinearPoints = new ArrayList<>();
@@ -63,22 +60,29 @@ public class FastCollinearPoints {
 					collinearPoints.add(temp);
 				}
 			}
-			if(i == points.length - 1) {
-			    System.out.println("faf");
-            }
+			if (i == points.length - 1) {
+				System.out.println("faf");
+			}
 		}
 
 	}
 
-    private boolean isSegmentDuplicate(Point max, Point temp, double slope, List<Point> visited) {
-	    for(Point p : visited) {
-	        int maxCompareP = max.compareTo(p); double tempSlopeP = temp.slopeTo(p);
-	        if((maxCompareP == 0 && tempSlopeP == slope)) {
-	            return true;
-            }
-        }
-        return false;
-    }
+	private boolean isSegmentDuplicate(List<Point> collinear, Point temp, double slope, List<Point> visited) {
+		Point max = collinear.get(collinear.size() - 1);
+		for (Point p : visited) {
+			int maxCompareP = max.compareTo(p);
+			if (maxCompareP == 0) {
+				if (max.compareTo(temp) == 0) {
+					max = collinear.get(collinear.size() - 2);
+				}
+				double slopeWithP = temp.slopeTo(max);
+				if (slopeWithP == slope) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	/*
 	 * private boolean checkForCollinearity(Map<Double, List<Point>>
@@ -94,11 +98,12 @@ public class FastCollinearPoints {
 		Collections.sort(collinearPoints);
 		return collinearPoints.size() >= 4;
 	}
-	
+
 	private void checkForDuplicates(Point[] points) {
 		List<Point> list = new ArrayList<>();
 		for (int i = 0; i < points.length; i++) {
-			if(points[i] == null) throw new IllegalArgumentException("Invalid array element");
+			if (points[i] == null)
+				throw new IllegalArgumentException("Invalid array element");
 			if (!list.contains(points[i])) {
 				list.add(points[i]);
 			} else {
