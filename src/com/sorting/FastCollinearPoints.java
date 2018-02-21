@@ -33,7 +33,6 @@ public class FastCollinearPoints {
 			}
 			double prevSlope = Double.NEGATIVE_INFINITY;
 			List<Point> collinearPoints = new ArrayList<>();
-			collinearPoints.add(temp);
 			for (int j = 0; j < slopeOrdered.length; j++) {
 				Point curr = slopeOrdered[j];
 				// if(curr.equals(temp)) continue;
@@ -64,6 +63,12 @@ public class FastCollinearPoints {
 					collinearPoints.add(temp);
 				}
 			}
+			if(i == points.length - 1) {
+			    System.out.println("faf");
+            }
+			if (i == points.length - 1) {
+				System.out.println("faf");
+			}
 		}
 
 	}
@@ -72,11 +77,12 @@ public class FastCollinearPoints {
 		Collections.sort(collinearPoints);
 		return collinearPoints.size() >= 4;
 	}
-	
+
 	private void checkForDuplicates(Point[] points) {
 		List<Point> list = new ArrayList<>();
 		for (int i = 0; i < points.length; i++) {
-			if(points[i] == null) throw new IllegalArgumentException("Invalid array element");
+			if (points[i] == null)
+				throw new IllegalArgumentException("Invalid array element");
 			if (!list.contains(points[i])) {
 				list.add(points[i]);
 			} else {
