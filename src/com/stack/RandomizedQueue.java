@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 /**
  * Created by eccspro on 20/01/18.
  */
-public class RandomizedQueue<Item> implements Iterable {
+public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private Node<Item> head;
     private int size = 0;
@@ -19,7 +19,7 @@ public class RandomizedQueue<Item> implements Iterable {
 
     public void enqueue(Item item) {
         if(item == null) throw new IllegalArgumentException("Invalid Argument type");
-        Node node = new Node(item);
+        Node<Item> node = new Node<>(item);
         if(isEmpty()) {
             head = node;
         }
@@ -35,15 +35,15 @@ public class RandomizedQueue<Item> implements Iterable {
         Item retVal  = null;
         int position = StdRandom.uniform(size);
         if(position == 0) {
-            retVal = (Item) head.item;
+            retVal = head.item;
             head = head.next;
         }
         else {
-            Node temp = head;
+            Node<Item> temp = head;
             for(int i = 0; i < position - 1; i++) {
                 temp = temp.next;
             }
-            retVal = (Item) temp.next.item;
+            retVal = temp.next.item;
             temp.next = temp.next.next;
         }
         size--;
@@ -57,16 +57,16 @@ public class RandomizedQueue<Item> implements Iterable {
     public Item sample() {
         if(isEmpty()) throw new NoSuchElementException("Queue is empty");
         int position = StdRandom.uniform(size);
-        Node node = head;
+        Node<Item> node = head;
         for(int i = 0; i < position; i++) {
             node = node.next;
         }
-        return (Item) node.item;
+        return node.item;
     }
 
     private class Node<Item> {
-        private Item item;
-        private Node next;
+        private final Item item;
+        private Node<Item> next;
 
         public Node(Item item) {
             this.item = item;
@@ -76,15 +76,15 @@ public class RandomizedQueue<Item> implements Iterable {
 
     private class MyIterator implements Iterator<Item> {
 
-        private Item [] curr;
+        private final Item [] curr;
         private int iteratorPosition = 0;
 
         public MyIterator() {
             curr = (Item [])  new Object[size];
             int index = 0;
-            Node temp = head;
+            Node<Item> temp = head;
             while(temp != null) {
-                curr[index] = (Item) temp.item;
+                curr[index] = temp.item;
                 temp = temp.next;
                 index++;
             }
@@ -98,6 +98,7 @@ public class RandomizedQueue<Item> implements Iterable {
 
         @Override
         public Item next() {
+            if(iteratorPosition >= curr.length) throw new NoSuchElementException("No more items to return");
             Item item = curr[iteratorPosition];
             iteratorPosition++;
             return item;
@@ -105,7 +106,7 @@ public class RandomizedQueue<Item> implements Iterable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Item> iterator() {
         return new MyIterator();
     }
 

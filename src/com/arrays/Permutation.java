@@ -12,13 +12,8 @@ public class Permutation {
         int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> rq = new RandomizedQueue<>();
 
-        String [] input = StdIn.readLine().split("\\s+");
-
-        for(String s : input) {
-            //System.out.println(s);
-        }
-
-        for(String s : input) {
+        for(int i = 0; i < k; i++) {
+            String s = StdIn.readString();
             rq.enqueue(s);
         }
 

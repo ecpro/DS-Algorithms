@@ -5,14 +5,14 @@ import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item>{
 	
-	private Node head;
-	private Node tail;
+	private Node<Item> head;
+	private Node<Item> tail;
 	private int size;
 	
 	private class Node<Item> {
-        private Item item;
-        private Node next;
-        private Node prev;
+        private final Item item;
+        private Node<Item> next;
+        private Node<Item> prev;
 
         public Node(Item item) {
             this.item = item;
@@ -28,11 +28,11 @@ public class Deque<Item> implements Iterable<Item>{
             return this.head == null;
     }
 
-	   public int size() {
+    public int size() {
 	        return size;
 	   }
 
-	   public void addFirst(Item item)  {
+    public void addFirst(Item item)  {
 	    if(item == null) throw new IllegalArgumentException("Invalid argument type");
 	    Node<Item> node = new Node<>(item);
 	    if(this.size == 0) {
@@ -40,7 +40,7 @@ public class Deque<Item> implements Iterable<Item>{
 	        this.tail = node;
 	        this.size++;
 	        return;
-        }
+	    }
 
         node.next = head;
 	    this.head.prev = node;
@@ -68,7 +68,7 @@ public class Deque<Item> implements Iterable<Item>{
 
 	   public Item removeFirst()   {
            if(this.size == 0) throw new NoSuchElementException("Cannot remove from empty queue");
-           Item retVal = (Item) head.item;
+           Item retVal = head.item;
            if(this.size == 1) {
                this.head = this.tail = null;
                size--;
@@ -83,7 +83,7 @@ public class Deque<Item> implements Iterable<Item>{
 
 	   public Item removeLast(){
            if(this.size == 0) throw new NoSuchElementException("Cannot remove from empty queue");
-           Item retVal = (Item) head.item;
+           Item retVal = head.item;
            if(size == 1) {
                head = tail = null;
                size--;
@@ -111,7 +111,7 @@ public class Deque<Item> implements Iterable<Item>{
            @Override
            public Item next() {
                if(node == null) throw new NoSuchElementException("No more items to return");
-                Item retVal = (Item) node.item;
+                Item retVal = node.item;
                 node = node.next;
                 return retVal;
            }
