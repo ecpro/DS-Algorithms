@@ -10,6 +10,10 @@ public class BST<Key extends Comparable<Key>, Value> {
 
 	}
 
+	public BST(BST tree) {
+		this.root = tree.getRoot();
+	}
+
 	public void put(Key key, Value value) {
 		if(key == null) throw new IllegalArgumentException("Key cannot be null");  
 		Node temp = new Node(key, value);
@@ -30,6 +34,10 @@ public class BST<Key extends Comparable<Key>, Value> {
 		else {
 			parent.right = temp;
 		}
+	}
+
+	public Node getRoot() {
+		return this.root;
 	}
 
 	public Value get(Key key) {
@@ -60,6 +68,22 @@ public class BST<Key extends Comparable<Key>, Value> {
 		Node(Key key, Value value) {
 			this.key = key;
 			this.value = value;
+		}
+
+		public Node getLeft() {
+			return left;
+		}
+
+		public Node getRight() {
+			return right;
+		}
+
+		public Key getKey() {
+			return key;
+		}
+
+		public Value getValue() {
+			return value;
 		}
 	}
 	
