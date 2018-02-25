@@ -73,6 +73,12 @@ public class BSTTraversals {
         }
     }
 
+    public static boolean isSameTree(BST.Node x, BST.Node y) {
+        if(x == null && y == null) return true;
+        if(x == null || y == null) return false;
+        return x.getKey().compareTo(y.getKey()) == 0 && isSameTree(x.getLeft(), y.getLeft()) && isSameTree(x.getRight(), y.getRight());
+    }
+
     public static void main(String args []) {
         BST<Integer, Object> bst = new BST<>();
         final Object x = new Object();
@@ -87,17 +93,35 @@ public class BSTTraversals {
         bst.put(23, x);
         bst.put(26, x);
 
+        System.out.println("---- PreOrderTraversal Recursive ----");
         preOrderTraversal(bst.getRoot());
-        System.out.println();
+        System.out.println("\n---- PreOrderTraversal Iterative ----");
         preOrderTraversal(bst.getRoot());
-        System.out.println();
+        System.out.println("\n---- InOrderTraversal Recursive ----");
         inOrderTraversal(bst.getRoot());
-        System.out.println();
+        System.out.println("\n---- InOrderTraversal Iterative ----");
         inOrderIterative(bst.getRoot());
-        System.out.println();
+        System.out.println("\n---- PostOrderTraversal Recursive ----");
         postOrderTraversal(bst.getRoot());
-        System.out.println();
+        System.out.println("\n---- LevelOrderTraversal ----");
         levelOrderTraversal(bst.getRoot());
+        System.out.println("\n---- Same Tree Or Not ----");
+        System.out.println(isSameTree(bst.getRoot(), bst.getRoot()));
+
+        BST<Integer, Object> bst2 = new BST<>();
+        bst2.put(20, x);
+        bst2.put(12, x);
+        bst2.put(22, x);
+        bst2.put(18, x);
+        bst2.put(14, x);
+        bst2.put(8, x);
+        bst2.put(6, x);
+        bst2.put(24, x);
+        bst2.put(23, x);
+        bst2.put(26, x);
+
+        System.out.println("\n---- Same Tree Or Not ----");
+        System.out.println(isSameTree(bst.getRoot(), bst2.getRoot()));
     }
 
 }
