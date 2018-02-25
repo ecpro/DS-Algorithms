@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-/**
- * Created by eccspro on 24/02/18.
- */
 public class BSTTraversals {
 
     public static void preOrderTraversal(BST.Node rootNode) {
@@ -73,6 +70,25 @@ public class BSTTraversals {
         }
     }
 
+    public static int sizeOfBinaryTree(BST.Node root) {
+        BST.Node x = root;
+        Queue<BST.Node> queue = new LinkedList<>();
+        queue.add(x);
+        int count = 0;
+        while(!queue.isEmpty()) {
+            x = queue.remove();
+            count++;
+            if(x.getLeft() != null) queue.add(x.getLeft());
+            if(x.getRight() != null) queue.add(x.getRight());
+        }
+        return count;
+    }
+
+    public static int sizeOfBinaryTreeRecursive(BST.Node root) {
+        if(root == null) return 0;
+        return 1 + sizeOfBinaryTreeRecursive(root.getLeft()) + sizeOfBinaryTreeRecursive(root.getRight());
+    }
+
     public static boolean isSameTree(BST.Node x, BST.Node y) {
         if(x == null && y == null) return true;
         if(x == null || y == null) return false;
@@ -122,6 +138,12 @@ public class BSTTraversals {
 
         System.out.println("\n---- Same Tree Or Not ----");
         System.out.println(isSameTree(bst.getRoot(), bst2.getRoot()));
+
+        System.out.println("\n---- Size of Binary Tree Iterative ----");
+        System.out.println(sizeOfBinaryTree(bst.getRoot()));
+
+        System.out.println("\n---- Size of Binary Tree Recursive ----");
+        System.out.println(sizeOfBinaryTreeRecursive(bst.getRoot()));
     }
 
 }
