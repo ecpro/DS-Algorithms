@@ -95,6 +95,17 @@ public class BSTTraversals {
         return x.getKey().compareTo(y.getKey()) == 0 && isSameTree(x.getLeft(), y.getLeft()) && isSameTree(x.getRight(), y.getRight());
     }
 
+    public static int heightBinaryTree(BST.Node root) {
+        if(root.getLeft() == null && root.getRight() == null) return 0;
+        if(root.getLeft() == null && root.getRight() != null) {
+            return 1 + heightBinaryTree(root.getRight());
+        }
+        if(root.getLeft() != null && root.getRight() == null) {
+            return 1 + heightBinaryTree(root.getLeft());
+        }
+        return 1 + Math.max(heightBinaryTree(root.getLeft()), heightBinaryTree(root.getRight()));
+    }
+
     public static void main(String args []) {
         BST<Integer, Object> bst = new BST<>();
         final Object x = new Object();
@@ -144,6 +155,9 @@ public class BSTTraversals {
 
         System.out.println("\n---- Size of Binary Tree Recursive ----");
         System.out.println(sizeOfBinaryTreeRecursive(bst.getRoot()));
+
+        System.out.println("\n---- Height of Binary Tree Recursive ----");
+        System.out.println(heightBinaryTree(bst.getRoot()));
     }
 
 }
