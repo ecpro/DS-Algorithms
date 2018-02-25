@@ -85,6 +85,14 @@ public class BST<Key extends Comparable<Key>, Value> {
 		public Value getValue() {
 			return value;
 		}
+
+		@Override
+		public String toString() {
+			return "Node{" +
+					"key=" + key +
+					", value=" + value +
+					'}';
+		}
 	}
 	
 	public static void main(String[] args) {

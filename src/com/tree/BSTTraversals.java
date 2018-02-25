@@ -1,5 +1,9 @@
 package com.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 /**
  * Created by eccspro on 24/02/18.
  */
@@ -12,11 +16,26 @@ public class BSTTraversals {
         preOrderTraversal(rootNode.getRight());
     }
 
+    public static void preOrderIterative(BST.Node root) {
+        if(root == null) return;
+        Stack<BST.Node> stack = new Stack<>();
+        stack.push(root);
+        while(!stack.empty()) {
+            BST.Node x = stack.pop();
+            if(x.getRight() != null) stack.push(x.getRight());
+            if(x.getLeft() != null) stack.push(x.getLeft());
+        }
+    }
+
     public static void postOrderTraversal(BST.Node rootNode) {
         if(rootNode == null) return;
         postOrderTraversal(rootNode.getLeft());
         postOrderTraversal(rootNode.getRight());
         System.out.print(rootNode.getKey() + " ");
+    }
+
+    public static void postOrderIterative(BST.Node root) {
+
     }
 
     public static void inOrderTraversal(BST.Node rootNode) {
@@ -26,8 +45,32 @@ public class BSTTraversals {
         inOrderTraversal(rootNode.getRight());
     }
 
-    public static void levelOrderTraversal(BST.Node rootNode) {
+    public static void inOrderIterative(BST.Node root) {
+        Stack<BST.Node> stack = new Stack<>();
+        BST.Node x = root;
+        while(!stack.isEmpty() || x != null) {
+            if(x != null) {
+                stack.push(x);
+                x = x.getLeft();
+            }
+            else {
+                x = stack.pop();
+                System.out.print(x.getKey() + " ");
+                x = x.getRight();
+            }
+        }
+    }
 
+    public static void levelOrderTraversal(BST.Node root) {
+        BST.Node x = root;
+        Queue<BST.Node> queue = new LinkedList<>();
+        queue.add(x);
+        while(!queue.isEmpty()) {
+            x = queue.remove();
+            System.out.print(x.getKey() + " ");
+            if(x.getLeft() != null) queue.add(x.getLeft());
+            if(x.getRight() != null) queue.add(x.getRight());
+        }
     }
 
     public static void main(String args []) {
@@ -46,9 +89,15 @@ public class BSTTraversals {
 
         preOrderTraversal(bst.getRoot());
         System.out.println();
+        preOrderTraversal(bst.getRoot());
+        System.out.println();
         inOrderTraversal(bst.getRoot());
         System.out.println();
+        inOrderIterative(bst.getRoot());
+        System.out.println();
         postOrderTraversal(bst.getRoot());
+        System.out.println();
+        levelOrderTraversal(bst.getRoot());
     }
 
 }
