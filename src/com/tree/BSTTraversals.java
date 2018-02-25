@@ -1,5 +1,7 @@
 package com.tree;
 
+import edu.princeton.cs.algs4.In;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -106,6 +108,22 @@ public class BSTTraversals {
         return 1 + Math.max(heightBinaryTree(root.getLeft()), heightBinaryTree(root.getRight()));
     }
 
+    public static boolean rootLeafSum(int sum, BST.Node root, Queue<BST.Node> path) {
+        if(root == null) return false;
+        int key = (Integer) root.getKey();
+        int remSum = sum - key;
+        if(root.getLeft() == null && root.getRight() == null && remSum == 0) {
+            path.add(root);
+            return true;
+        }
+        boolean flag = false;
+        flag = rootLeafSum(remSum, root.getLeft(), path) || rootLeafSum(remSum, root.getRight(), path);
+        if(flag) {
+            path.add(root);
+        }
+        return flag;
+    }
+
     public static void main(String args []) {
         BST<Integer, Object> bst = new BST<>();
         final Object x = new Object();
@@ -158,6 +176,8 @@ public class BSTTraversals {
 
         System.out.println("\n---- Height of Binary Tree Recursive ----");
         System.out.println(heightBinaryTree(bst.getRoot()));
+
+
     }
 
 }
