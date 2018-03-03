@@ -124,6 +124,38 @@ public class BSTTraversals {
         return flag;
     }
 
+    public static void iterativePostOrderTraveral(BST.Node root) {
+        if(root == null) throw new IllegalArgumentException("root cannot be " + null);
+        Stack<BST.Node> stack = new Stack<>();
+        BST.Node curr = root;
+        stack.push(root);
+        curr = curr.getLeft();
+        BST.Node lastPopped = null;
+        while(!stack.isEmpty()) {
+            // go the bottommost leaf node on the left child
+            if(curr != null) {
+                stack.push(curr);
+                curr = curr.getLeft();
+            }
+            else {
+                // leaf node condition
+                if(stack.peek().getRight() == null) {
+                 lastPopped = stack.pop();
+                 System.out.print(lastPopped.getKey() + " ");
+                }
+                else if(stack.peek().getRight() != null && stack.peek().getRight() != lastPopped) {
+                    curr = stack.peek().getRight();
+                }
+                else {
+                    if(lastPopped != stack.peek().getLeft()) {
+                        lastPopped = stack.pop();
+                        System.out.print(lastPopped.getKey() + " ");
+                    }
+                }
+            }
+        }
+    }
+
     public static void main(String args []) {
         BST<Integer, Object> bst = new BST<>();
         final Object x = new Object();
@@ -176,6 +208,9 @@ public class BSTTraversals {
 
         System.out.println("\n---- Height of Binary Tree Recursive ----");
         System.out.println(heightBinaryTree(bst.getRoot()));
+
+        System.out.println("\n---- Iterative post order traversal ----");
+        iterativePostOrderTraveral(bst.getRoot());
 
 
     }
