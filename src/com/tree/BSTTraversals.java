@@ -212,7 +212,6 @@ public class BSTTraversals {
         System.out.println("\n---- Iterative post order traversal ----");
         iterativePostOrderTraveral(bst.getRoot());
 
-
     }
 
 }
