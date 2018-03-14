@@ -17,6 +17,10 @@ package com.greedy;
  If we're going to do better than O(n^2), we're probably going to do it in either O(n log(n))or O(n)
  Since we're trying to loop through the array once, let's use a greedy.
  */
+
+
+
+
 public class AppleStock {
 
     public static int getMaxProfit(int [] stockPricesYesterday) {
