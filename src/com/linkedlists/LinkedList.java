@@ -139,6 +139,18 @@ public class LinkedList {
 		kthtoLastNode(this.head, 3);
 	}
 
+	public void kthToLastNodeNonRecursive(Integer k) {
+		Node tempP = this.head, pKth = this.head;
+		int pos = 1;
+		while (tempP.getNext() != null) {
+			tempP = tempP.getNext();
+			if(pos >= k) pKth = pKth.getNext();
+			pos++;
+		}
+		System.out.println(pKth.getKey());
+	}
+
+
 	private void kthtoLastNode(Node node, Integer k) {
 		if (node == null) {
 			this.count++;
@@ -303,8 +315,9 @@ public class LinkedList {
 	public static void main(String[] args) {
 		
 		LinkedList l1 = new LinkedList();
-		l1.add(1,8,9);
-		l1.print();
+		l1.add(1,8,9,12,14,12);
+		//l1.print();
+		l1.kthToLastNodeNonRecursive(5);
 
 		LinkedList l2 = new LinkedList();
 		l2.add(1,2,3,6);

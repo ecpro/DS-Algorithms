@@ -11,7 +11,7 @@ package com.greedy;
  [84,12,4,1] next sum
  [1, 1, 7, 21] prev sum
  [84,12, 28, 21] complete sum result
- 
+
  */
 public class ProductOfOthers {
 
