@@ -1,4 +1,4 @@
-package com.sorting;
+package com.sorting.Algorithms1Week3Assignment;
 
 import java.io.File;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.sorting;
+package com.sorting.Algorithms1Week3Assignment;
 
 import java.util.ArrayList;
 import java.util.Collections;
