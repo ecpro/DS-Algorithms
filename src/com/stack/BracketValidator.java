@@ -36,7 +36,7 @@ public class BracketValidator {
         return stack.isEmpty();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         List<Character> charList = Arrays.asList('{', '(', ')', '{', '(', ')', '[', ']', '}', '}');
         boolean validate = validate(charList);
         System.out.println(validate);

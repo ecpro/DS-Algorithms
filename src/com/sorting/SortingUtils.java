@@ -2,6 +2,8 @@ package com.sorting;
 
 public class SortingUtils {
 
+    private SortingUtils(){}
+
     public static void swap(Comparable[] input, int i, int j) {
         Comparable temp = input[i];
         input[i] = input[j];

@@ -19,7 +19,8 @@ public class MergeSort {
 
     private static void merge(Comparable[] input, int startIdx, int midIdx, int endIdx) {
         Comparable[] copy = Arrays.copyOf(input, input.length);
-        int i = startIdx, j = midIdx + 1;
+        int i = startIdx;
+        int j = midIdx + 1;
         for(int k = startIdx; k <= endIdx; k++) {
             if(i > midIdx) input[k] = copy[j++];
             else if(j > endIdx) input[k] = copy[i++];
