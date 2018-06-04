@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class MergeSortedArrays {
 
     public static void merge(Integer[] a, Integer[] b, int m, int n) {
+
         int x = m + n - 1;
         m = m - 1;
         n = n - 1;

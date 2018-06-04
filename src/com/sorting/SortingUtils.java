@@ -15,6 +15,7 @@ public class SortingUtils {
     }
 
     public static boolean less(Comparable a, Comparable b, boolean reverse) {
-        return b.compareTo(a) < 0;
+        if(reverse) return b.compareTo(a) < 0;
+        else return less(a,b);
     }
 }
