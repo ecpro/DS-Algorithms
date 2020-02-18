@@ -73,8 +73,7 @@ public class RatMaze {
     }
 
     public static void main(String[] args) {
-        int[][] maze = {{1,0,0,0,0}, {1,1,0,0,0}, {1,1,1,1,1}, {1,1,1,0,1}};
-        System.out.println(new Coordinate(1,2).equals(new Coordinate(1,2)));
+        int[][] maze = {{1,0,0,0,0}, {1,1,0,0,0}, {1,1,1,1,1}, {1,1,1,0,0}};
         Stack<Coordinate> coordinates = solveMaze(maze, 0, 0);
         if(Objects.nonNull(coordinates)) {
             coordinates.forEach(coordinate -> {
